@@ -28,7 +28,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 if 'DEVELOPMENT' in os.environ:
     DEBUG = True
-    ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]']
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]', '.vfs.cloud9.us-east-2.amazonaws.com']
 else:
     DEBUG = False
     ALLOWED_HOSTS = ['.herokuapp.com']
@@ -111,7 +111,8 @@ WSGI_APPLICATION = 'rerentweb.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {}
-if 'DATABASE_URL' in os.environ:
+database_url = os.environ.get("DATABASE_URL").strip()
+if database_url:
     # Use DATABASE_URL, which would be provided by Heroku. This is
     # likely to be the case when we're in production.
     DATABASES['default'] = dj_database_url.config(conn_max_age=600)
